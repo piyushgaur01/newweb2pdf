@@ -1,7 +1,10 @@
+var supercrawler = require("supercrawler");
+var URL = require('url-parse');
 
 exports.crawlingFunction = function (startUrl) {
+    var urlFn = new URL(startUrl);
     return new Promise(function (resolve, reject) {
-        var supercrawler = require("supercrawler");
+        
         var urlList = [];
         var excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG',
             'pdf', 'zip', 'mp4', 'txt', 'ico', 'txt', 'rar'];
@@ -10,6 +13,8 @@ exports.crawlingFunction = function (startUrl) {
             interval: 100,
             concurrentRequestsLimit: 5
         });
+
+        crawler.addHandler("text/plain", supercrawler.handlers.robotsParser());
 
         crawler.on("crawlurl", function (url) {
             console.log("Crawling " + url);
@@ -29,7 +34,7 @@ exports.crawlingFunction = function (startUrl) {
         });
         crawler.addHandler("text/html", supercrawler.handlers.htmlLinkParser({
             // Restrict discovered links to the following hostnames.
-            hostnames: ["sweetpricing.com"]
+            hostnames: [urlFn.hostname]
         }));
 
 

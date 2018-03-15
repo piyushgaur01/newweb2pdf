@@ -1,9 +1,11 @@
 var express = require('express');
-var router = express.Router();
+var screenshot = require('../server-controllers/screenshot');
 var supercrawl = require('../server-controllers/supercrawl');
 var utilities = require('../server-controllers/utilities');
 var excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG',
   'pdf', 'zip', 'mp4', 'txt', 'ico'];
+
+var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -13,23 +15,43 @@ router.get('/', function (req, res, next) {
 router.post('/generatepdf', function (req, res, next) {
   var body = req.body;
   var url = body.url;
-  var urlsList = supercrawl.crawlingFunction(url);
-  urlsList
-    .then((success) => {
-      //console.log(success);
+  //var urlsList = supercrawl.crawlingFunction(url);
+  var filteredUrls = [
+    'https://www.lilly.se/SV/index.aspx',
+    'https://www.lilly.se/sv/about/index.aspx',
+    'https://www.lilly.se/sv/products/index.aspx'
+  ];
 
-      var intersection = success.filter(function (e) {
-        e = e.substring(e.length-3);
-        return excludeTypes.indexOf(e) < 0;
-      });
+  screenshot.screenshots(filteredUrls, 1024, 768)
+    .then((response) => {
+      console.log(response);
+      return res.send(JSON.stringify(response));
+    });
 
-      console.log(intersection);
-      intersection = utilities.ArrNoDupe(intersection);
-      return res.send(JSON.stringify(intersection));
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+  // urlsList
+  //   .then((success) => {
+  //     //console.log(success);
+
+  //     var filteredUrls = success.filter(function (e) {
+  //       e = e.substring(e.length - 3);
+  //       return excludeTypes.indexOf(e) < 0;
+  //     });
+
+  //     //console.log(filteredUrls);
+  //     filteredUrls = utilities.ArrNoDupe(filteredUrls);
+  //     filteredUrls = filteredUrls.slice(filteredUrls.length - 5);
+  //     return res.send(JSON.stringify(filteredUrls));
+
+  //     // screenshot.screenshots(filteredUrls, 1024, 768)
+  //     // .then((response) => {
+  //     //   console.log(response);
+  //     //   return res.send(JSON.stringify(response));
+  //     // });
+
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   })
 
 });
 
