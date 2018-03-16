@@ -2,8 +2,44 @@ var express = require('express');
 var screenshot = require('../server-controllers/screenshot');
 var supercrawl = require('../server-controllers/supercrawl');
 var utilities = require('../server-controllers/utilities');
+
 var excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG',
   'pdf', 'zip', 'mp4', 'txt', 'ico'];
+
+let desktop = {
+  name: 'desktop',
+  size: {
+    width: 1366
+    , height: 768
+  }
+};
+
+let mobile = {
+  name: 'mobile',
+  size: {
+    width: 375
+    , height: 667
+  }
+};
+
+let largeDesktop = {
+  name: 'largeDesktop',
+  size: {
+    width: 1440
+    , height: 900
+  }
+};
+
+let ipad = {
+  name: 'ipad',
+  size: {
+    width: 768
+    , height: 1024
+  }
+};
+
+let configurations = [mobile,ipad,desktop,largeDesktop];
+
 
 var router = express.Router();
 
@@ -14,19 +50,28 @@ router.get('/', function (req, res, next) {
 
 router.post('/generatepdf', function (req, res, next) {
   var body = req.body;
-  var url = body.url;
+  var urlsList = body.url.split(',');
+  var devices = body.devices;
+  let promiseArray = [];
   //var urlsList = supercrawl.crawlingFunction(url);
-  var filteredUrls = [
-    'https://www.lilly.se/SV/index.aspx',
-    'https://www.lilly.se/sv/about/index.aspx',
-    'https://www.lilly.se/sv/products/index.aspx'
-  ];
+  configurations = configurations.filter((config) => {
+    return devices.indexOf(config.name) > -1;
+  });
+  
 
-  screenshot.screenshots(filteredUrls, 1024, 768)
-    .then((response) => {
-      console.log(response);
-      return res.send(JSON.stringify(response));
-    });
+  //return res.send(JSON.stringify(configurations));
+
+  configurations.forEach((device) => {
+    promiseArray.push(screenshot.screenshots(urlsList, device));
+  });
+
+  Promise.all(promiseArray)
+  .then((results) => {
+    console.log(results);
+    return res.send(JSON.stringify(results));
+  })
+
+  
 
   // urlsList
   //   .then((success) => {
@@ -39,19 +84,23 @@ router.post('/generatepdf', function (req, res, next) {
 
   //     //console.log(filteredUrls);
   //     filteredUrls = utilities.ArrNoDupe(filteredUrls);
-  //     filteredUrls = filteredUrls.slice(filteredUrls.length - 5);
-  //     return res.send(JSON.stringify(filteredUrls));
+  //     //filteredUrls = filteredUrls.slice(filteredUrls.length - 5);
+  //     //return res.send(JSON.stringify(filteredUrls));
 
-  //     // screenshot.screenshots(filteredUrls, 1024, 768)
-  //     // .then((response) => {
-  //     //   console.log(response);
-  //     //   return res.send(JSON.stringify(response));
-  //     // });
+  //     configurations.forEach((device) => {
+  //       promiseArray.push(screenshot.screenshots(filteredUrls, device));
+  //     });
+    
+  //     Promise.all(promiseArray)
+  //     .then((results) => {
+  //       console.log(results);
+  //       return res.send(JSON.stringify(results));
+  //     })
 
   //   })
   //   .catch((error) => {
   //     console.log(error);
-  //   })
+  //   });
 
 });
 
