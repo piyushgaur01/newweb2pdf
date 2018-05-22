@@ -3,102 +3,113 @@ var PDF = require('pdfkit');
 var fs = require('fs');
 var async = require('async');
 const URL = require('url-parse');
-
+var pdfGenerator = require('../server-controllers/pdf-generator');
 var screenshotDir = './public/screenshots/';
-var pdfDir = './public/PDF/';
+var pdfDir = './../PDF/';
 
-exports.screenshots = function (urlList, device) {
-    if (!fs.existsSync(screenshotDir)) {
-        fs.mkdirSync(screenshotDir);
-    }
+exports.crawlingFunction=function(urlHostName,devices,res){
 
-    if (!fs.existsSync(pdfDir)) {
-        fs.mkdirSync(pdfDir);
-    }
+let desktop = {
+  name: 'desktop',
+  size: {
+    width: 1366
+    , height: 768
+  }
+};
 
-    urlList = urlList.map(item => item.trim());
+let mobile = {
+  name: 'mobile',
+  size: {
+    width: 375
+    , height: 667
+  }
+};
 
-    return new Promise(function (resolve, reject) {
+let largeDesktop = {
+  name: 'largeDesktop',
+  size: {
+    width: 1440
+    , height: 900
+  }
+};
 
-        (async () => {
-            const browser = await puppeteer.launch();
-            const page = await browser.newPage();
-            await page.setViewport({
+let ipad = {
+  name: 'ipad',
+  size: {
+    width: 768
+    , height: 1024
+  }
+};
+
+let configurations = [mobile,ipad,desktop,largeDesktop];
+configurations = configurations.filter((config) => {
+    return devices.indexOf(config.name) > -1;
+  });
+  
+configurations.forEach((device) => {
+    screenshot(device,urlHostName,res);
+  });
+
+
+}
+
+function screenshot(device,urlHostName,res) {
+    var fs = require('fs');
+  
+    var puppeteer = require('puppeteer');
+    fs.readFile(`./websites/${urlHostName}/urls_list.txt`, 'utf8', function (err, data) {
+      if (err) throw err;
+      console.log(data);
+      var obj = JSON.parse(data);
+  
+  
+      console.log(obj);
+  
+  
+      (async () => {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.setViewport({
                 width: parseInt(device.size.width), 
                 height: parseInt(device.size.height)
             });
-
-            for (var i = 0; i < urlList.length; i++) {
-                var urlFn = new URL(urlList[i]);
-                if (!fs.existsSync(`${screenshotDir}/${urlFn.hostname}`)) {
-                    fs.mkdirSync(`${screenshotDir}/${urlFn.hostname}`);
+        var site = obj;
+        console.log(site);
+  
+        for (var i = 0; i < site.length; i++) {
+          console.log(i);
+          var URL = site[i];
+          console.log(URL);
+          await page.goto(URL);
+		  if (!fs.existsSync(`${screenshotDir}/${urlHostName}`)) {
+                    fs.mkdirSync(`${screenshotDir}/${urlHostName}`);
                 }
-                if (!fs.existsSync(`${screenshotDir}/${urlFn.hostname}/${device.name}`)) {
-                    fs.mkdirSync(`${screenshotDir}/${urlFn.hostname}/${device.name}`);
+                if (!fs.existsSync(`${screenshotDir}/${urlHostName}/${device.name}`)) {
+                    fs.mkdirSync(`${screenshotDir}/${urlHostName}/${device.name}`);
                 }
-                await page.goto(urlList[i]);
-                await page.screenshot({ path: `${screenshotDir}/${urlFn.hostname}/${device.name}/${(i + 1)}.png`, fullPage: true });
-
-            }
-            console.log('********ended*************');
-            var ret = await pdfgenerator(urlList, device);
-            //var ret = 'screenshots taken';
-            await browser.close();
-            resolve(ret);
+          await page.screenshot({ path: `${screenshotDir}/${urlHostName}/${device.name}/${(i + 1)}.png`, fullPage: true });
+  
         }
-        )();
-
-    })
-}
-
-
-function pdfgenerator(urlList, device) {
-    //var urlFn = new URL(url);
-    return new Promise(function (resolve, reject) {
-        urlList.forEach(url => {
-            var urlFn = new URL(url);
-            var doc = new PDF({
-                size: [1500, 1100]
-            });
-            var i = 1;
-            doc.pipe(fs.createWriteStream(`${pdfDir}/${urlFn.hostname}.${device.name}.pdf`));
-
-            i = i + 1;
-
-            var dirPath = `${screenshotDir}/${urlFn.hostname}/${device.name}`;
-
-            fs.readdir(dirPath, function (err, filesPath) {
-                if (err) reject(err);
-
-                filesPath = filesPath.map(function (filePath) {
-                    return dirPath + "/" + filePath;
-                });
-
-                async.map(filesPath, function (err, filesPath) {
-                    fs.readFile(err, filesPath);
-
-                }, function (err, body) {
-                    if (err) reject(err);
-
-                    for (var i = 0; i < body.length; i++) {
-                        doc.image(body[i], 0, 15, {
-                            fit: [device.size.width, device.size.height],
-                            align: 'center',
-                            valign: 'center'
-                        });
-                        // doc.text('HOLIDAYS - 1 Fortime',80,165,{align:'TOP'});
-                        // doc.text('Hello this is a demo file',100,200);
-                        doc.addPage();
-                    }
-
-                    doc.end();
-                    resolve(`PDF ${device.name} successful`);
-
-                });
-            });
+		
+        console.log('********ended*************');
+		pdfGenerator.pdfgenerator(urlHostName,device.name,res)
+       // await pdfgenerator();
+        await browser.close();
+      }
+      )();
+  
+    
+  
+	})}
 
 
-        });
-    });
-}
+
+
+
+
+
+
+
+
+
 

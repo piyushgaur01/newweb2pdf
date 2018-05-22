@@ -6,39 +6,7 @@ var utilities = require('../server-controllers/utilities');
 var excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG',
   'pdf', 'zip', 'mp4', 'txt', 'ico'];
 
-let desktop = {
-  name: 'desktop',
-  size: {
-    width: 1366
-    , height: 768
-  }
-};
 
-let mobile = {
-  name: 'mobile',
-  size: {
-    width: 375
-    , height: 667
-  }
-};
-
-let largeDesktop = {
-  name: 'largeDesktop',
-  size: {
-    width: 1440
-    , height: 900
-  }
-};
-
-let ipad = {
-  name: 'ipad',
-  size: {
-    width: 768
-    , height: 1024
-  }
-};
-
-let configurations = [mobile,ipad,desktop,largeDesktop];
 
 
 var router = express.Router();
@@ -53,23 +21,15 @@ router.post('/generatepdf', function (req, res, next) {
   var urlsList = body.url.split(',');
   var devices = body.devices;
   let promiseArray = [];
-  //var urlsList = supercrawl.crawlingFunction(url);
-  configurations = configurations.filter((config) => {
-    return devices.indexOf(config.name) > -1;
-  });
+  supercrawl.crawlingFunction(urlsList,devices,res);
+  
+  
+  
+  
+ 
+
   
 
-  //return res.send(JSON.stringify(configurations));
-
-  configurations.forEach((device) => {
-    promiseArray.push(screenshot.screenshots(urlsList, device));
-  });
-
-  Promise.all(promiseArray)
-  .then((results) => {
-    console.log(results);
-    return res.send(JSON.stringify(results));
-  })
 
   
 
