@@ -1,6 +1,7 @@
 var pdfDir = './public/PDF/';
 var screenshot = require('../server-controllers/screenshot');
 var screenshotDir = './public/screenshots/';
+
 exports.pdfgenerator=function(urlHostName,deviceName,res) {
     var PDF = require('pdfkit');
     var fs = require('fs');
