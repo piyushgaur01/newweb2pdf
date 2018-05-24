@@ -1,94 +1,125 @@
-<div>
-    <div class="mainContainer">
-        <div class="container-fluid bg_header">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="row">
-                <div class="navbar-header col-sm-3">
-                    <img src="images/ic_logo_tata_wht_lg.svg" alt="tcs-logo" class="tcs_logo img-responsive">
-                </div>
-                <div class="col-sm-3 col-sm-offset-6">
-                    <p class="LogoText">WEB 2 PDF</p>
+<html>
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+	.bg-primary {
+		background: linear-gradient(145deg, #349aed 50%, #34d8ed 100%) !important;
+		
+	}
+	.navbar{
+		border-radius: 0 !important;
+		margin-bottom: 0 !important;
+		border: 0 !important;
+	}
+	.navbar-dark .navbar-brand {
+		color: white;
+	}
+	.ml-auto{
+		margin-left: auto !important;
+		float: right;
+	}
+	
+	.container {
+		width:870px !important;
+	}
+	@media (min-width: 992px)
+	.navbar-expand-lg .navbar-collapse {
+		display: flex !important;
+	}
+	.navbar-dark .navbar-nav .nav-link {
+		color: rgba(255, 255, 255, 0.7);
+	}
+	.content-container{
+		min-height: 400px;
+	}
+	.splash{
+		background: linear-gradient(145deg, #349aed 50%, #34d8ed 100%) !important;
+		color: fff;
+		padding: 6em;
+		text-align: center;
+	}
+	input {
+		background:  white;
+		border:  0 !important;
+		border-bottom: 1px solid white;
+		width: 60%;
+		border-radius: 4px;
+		color: #000;
+	}
+	
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid" style="padding: 0 !important;">
+<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+	<div class="container">
+	<a href="../" class="navbar-brand">
+		<img src="logo1.png"></img>
+	</a>
 
-                    <a href='#' class="active-iframe help_click" style="color: white;
-                    font-weight: bold; font-size: 1.3em; text-decoration: underline;">
-                        Help
-                    </a>
-                    <a href='#' class="active-iframe help_click_close" style="color: white;
-                    font-weight: bold; font-size: 1.3em; text-decoration: underline;">
-                        Close Help
-                    </a>
-                </div>
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+	  
+
+	  <ul class="nav navbar-nav ml-auto">
+		
+		<li class="nav-item">
+		  <a class="nav-link" href="/" target="_blank">Web2PDF</a>
+		</li>
+	  </ul>
+
+	</div>
+	</div>
+</div>
+</div>
+</nav>
+<div class="content-container">
+<div class="splash">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-12">
+            
+            <div id="social">
+              <div class="input">
+
+                <input required id="urlText" style="width:400px">
+				
+              </div>
+              <div style="padding-top: 10px;">
+			  <button id="generatePdf" type="button" class="btn btn-success">Generate PDF</button>
+                
+              </div>
             </div>
+            <div class="row" style="padding-top: 10px;">
+              <div class="col-md-12 mx-auto">
+                <div id="resolution">
+                        <span class="button-checkbox">
+                            <button type="button" class="btn btn-default" id="b1" data-color="danger"><i class="state-icon glyphicon glyphicon-unchecked"></i>&nbsp;Mobile</button>
+                            <input type="radio" required="" id="ch1" class="hidden">
+                        </span>
+                        <span class="button-checkbox">
+                            <button type="button" class="btn btn-default" id="b2" data-color="primary"><i class="state-icon glyphicon glyphicon-unchecked"></i>&nbsp;iPad</button>
+                            <input type="radio" required="" id="ch2" class="hidden">
+                        </span>
+                        <span class="button-checkbox">
+                            <button type="button" class="btn btn-default" id="b3" data-color="success"><i class="state-icon glyphicon glyphicon-unchecked"></i>&nbsp;Desktop</button>
+                            <input type="radio" required="" id="ch3" class="hidden" checked>
+                        </span>
+                        
+                    </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="container-fluid bgBack">
-            <div class="blur"></div>
-            <div class="row">
-                <iframe id="display_help" src="http://vm-acellywd-087:8080/Home.aspx#" class="iFrame_Help"></iframe>
-                <div class="col-sm-6 col-sm-offset-3 formControl">
-                    <div class="titleHeader">
-                        <h3>Web2PDF Generator</h3>
-                    </div>
-
-                    <div role="urlFetching">
-                        <form id="urlForm">
-                            <input required id="urlText" style="width:400px">
-                            <label for="urlText">Enter the URL</label>
-                            <button id="generatePdf" class="btn btn-primary">Generate PDF</button>
-                        </form>
-                    </div>
-
-                    <div id="resolution">
-                        <span class="button-checkbox">
-                            <button type="button" class="btn" data-color="danger">Mobile</button>
-                            <input type="checkbox" required id="ch1"  class="hidden"  />
-                        </span>
-                        <span class="button-checkbox">
-                            <button type="button" class="btn" data-color="primary">iPad</button>
-                            <input type="checkbox" required id="ch2" class="hidden" />
-                        </span>
-                        <span class="button-checkbox">
-                            <button type="button" class="btn" data-color="success">Desktop</button>
-                            <input type="checkbox" required id="ch3" class="hidden"  />
-                        </span>
-                        <span class="button-checkbox">
-                            <button type="button" class="btn" data-color="info">Large Desktop</button>
-                            <input type="checkbox" required id="ch4" class="hidden"  />
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div class="row" id="openPdfDiv">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <p class="bg-success">
-                                <span>PDF Generated Successfully</span>
-                                <span class="btn btn-primary">
-                                    <a id="openPdfLink" href="../PDF/lilly.pdf" target='_blank'>Open pdf</a>
-                                </span>
-                            </p>
-                            <!-- <button id="openPdf" class="btn btn-warning">Open PDF</button> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="footer_section" id="contact">
-            <div class="container">
-                <div class="footer_bottom">
-                    <span>© All rights reserved by TATA CONSULTANCY SERVICES LTD</span>
-                </div>
-            </div>
-        </footer>
+      </div>
     </div>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
+	  <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
             <!-- Modal content-->
             <div class="modal-content">
@@ -111,5 +142,20 @@
 
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script src="js/index.js"></script>
-
 </div>
+<footer class="page-footer center-on-small-only stylish-color-dark">
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid" style="text-align:center;">
+            © All rights reserved by TATA CONSULTANCY SERVICES LTD
+            <span class="help-link">
+                <a href="help" title="Contact details:" data-toggle="popover" data-placement="top"></a>
+            </span>
+        </div>
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+</body>
+</html>

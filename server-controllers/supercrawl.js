@@ -158,9 +158,7 @@ exports.crawlingFunction=function(Urls,devices,res){
 	  console.log(type+'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
       type = type[type.length - 1];
 	  console.log(type+'=================shjhfdjskfdhksdhfshkhfksfjkfsjksjkjsdfks')
-	  if(link.startsWith('javascript:void(0)')){
-		  console.log('abra ka dabra============================================');
-	  }
+	 
       console.log(link);
       console.log(link.hostname);
       if (!(linkUrl.hostname)) {

@@ -10,18 +10,23 @@ function GeneratePDF() {
     }
 
     var postData = { url: '', devices: []};
+	
+	
+		
+	
 
     if ($('#ch1').is(":checked")) {
         postData.devices.push('mobile');
-        allow = true;
+		allow = true;
     }
-    if ($('#ch2').is(":checked")) {
-        postData.devices.push('ipad');
+		if ($('#ch2').is(":checked")) {
+		
+		postData.devices.push('ipad');
         allow = true;
     }
     if ($('#ch3').is(":checked")) {
         postData.devices.push('desktop');
-        allow = true;
+		allow = true;
     }
     if ($('#ch4').is(":checked")) {
         postData.devices.push('largeDesktop');
@@ -41,7 +46,7 @@ function GeneratePDF() {
           //  fileName = url[i].replace('http://', '');
         //}
         //console.log(url);
-        console.log(JSON.stringify(postData)+'jaskjadskjskjdksjkfsjdljsfl');
+        
         $.ajax({
 			
             method: 'post',
@@ -87,7 +92,7 @@ $(document).ready(function () {
         // Settings
         var $widget = $(this),
             $button = $widget.find('button'),
-            $checkbox = $widget.find('input:checkbox'),
+            $checkbox = $widget.find('input:radio'),
             color = $button.data('color'),
             settings = {
                 on: {

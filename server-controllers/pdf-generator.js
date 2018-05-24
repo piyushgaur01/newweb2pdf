@@ -47,7 +47,8 @@ exports.pdfgenerator = function (urlHostName, deviceName, res) {
 
       doc.end();
       console.log('success');
-      opn(`http://w2p-web2pdf.paas-poc.am.lilly.com/../PDF/${urlHostName}.${deviceName}.pdf`)
+      opn(`http://localhost:3000/../PDF/${urlHostName}.${deviceName}.pdf`)
+	  res.send('done');
 
     });
 
