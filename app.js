@@ -6,11 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var dotenv = require('dotenv');
 var root = require('./routes/root');
-
+var proxy = require('express-http-proxy');
 var app = express();
+ 
+
 
 if (app.get('env') === 'development') {
   dotenv.config();
+} else {
+  console.log('Application is running in production environ');
 }
 
 // view engine setup

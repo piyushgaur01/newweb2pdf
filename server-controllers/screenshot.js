@@ -52,7 +52,7 @@ configurations.forEach((device) => {
 
 
 }
-
+var download_link=[];
 function screenshot(device,urlHostName,res) {
     var fs = require('fs');
   
@@ -67,6 +67,7 @@ function screenshot(device,urlHostName,res) {
   
   
       (async () => {
+		  try{
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setViewport({
@@ -74,7 +75,7 @@ function screenshot(device,urlHostName,res) {
                 height: parseInt(device.size.height)
             });
         var site = obj;
-        console.log(site);
+        console.log(site.length+'=================================== at 78');
   
         for (var i = 0; i < site.length; i++) {
           console.log(i);
@@ -92,15 +93,21 @@ function screenshot(device,urlHostName,res) {
         }
 		
         console.log('********ended*************');
-		pdfGenerator.pdfgenerator(urlHostName,device.name,res)
+		pdfGenerator.pdfgenerator(urlHostName,device.name,res);
        // await pdfgenerator();
         await browser.close();
       }
+	  catch(e){
+		  console.log(e);
+	  }
+	  
+	  }
       )();
   
     
   
 	})}
+	//res.send('PDF will be generation is in ')
 
 
 

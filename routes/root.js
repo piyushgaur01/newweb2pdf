@@ -18,10 +18,12 @@ router.get('/', function (req, res, next) {
 
 router.post('/generatepdf', function (req, res, next) {
   var body = req.body;
-  var urlsList = body.url.split(',');
+  console.log(body);
+  var url = body.url;
+  
   var devices = body.devices;
   let promiseArray = [];
-  supercrawl.crawlingFunction(urlsList,devices,res);
+  supercrawl.crawlingFunction(url,devices,res);
   
   
   

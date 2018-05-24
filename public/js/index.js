@@ -30,31 +30,42 @@ function GeneratePDF() {
 
     if (allow) {
         $('#myModal').modal({ backdrop: 'static', keyboard: false, show: true });
-        var url = $('#urlText')[0].value;
-        postData.url = url;
-        var fileName = url.replace('https://', '');
-        if (fileName === url) {
-            fileName = url.replace('http://', '');
-        }
-        console.log(url);
-        console.log(fileName);
+        var url = $('#urlText')[0].value.split(',');
+		console.log(url.length);
+		var j=0;
+		for(var i=0;i<url.length;i++){
+			console.log(url[i]);
+        postData.url = url[i];
+        //var fileName = url[i].replace('https://', '');
+        //if (fileName === url[i]) {
+          //  fileName = url[i].replace('http://', '');
+        //}
+        //console.log(url);
+        console.log(JSON.stringify(postData)+'jaskjadskjskjdksjkfsjdljsfl');
         $.ajax({
+			
             method: 'post',
             url: '/generatepdf',
-            data: postData,
-            //contentType: "application/json",
+            data: JSON.stringify(postData),
+            contentType: "application/json",
             success: function (response) {
+				alert(response);
+				j++;
                 console.log(response);
-                $('#myModal').modal('hide');
-                $('#openPdfDiv').show();
-                $('#openPdfLink').attr('href', '../PDF/' + fileName + '.pdf');
+               
+                //$('#openPdfDiv').show();
+                //$('#openPdfLink').attr('href', '../PDF/' + fileName + '.pdf');
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log(JSON.stringify(jqXHR));
+              console.log(JSON.stringify(jqXHR));
                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 $('#myModal').modal('hide');
-            }
-        });
+				}
+			});
+		}
+			if(j==url.length){
+				 $('#myModal').modal('hide');
+			}
     } else {
         alert('Please select at least one device');
     }

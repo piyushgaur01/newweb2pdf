@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
     "express": "~4.15.5",
+    "express-http-proxy": "^1.2.0",
     "hbs": "~4.0.1",
     "morgan": "~1.9.0",
     "pdfkit": "^0.8.3",

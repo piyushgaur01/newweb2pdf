@@ -8,9 +8,10 @@ const utilities = require('./utilities');
  var screenshot = require('../server-controllers/screenshot');
 exports.crawlingFunction=function(Urls,devices,res){
   	console.log(Urls)
-	Urls.forEach((START_URL) =>{
+	
 		
-		const MAX_PAGES_TO_VISIT = 150;
+		START_URL=Urls.trim();
+		const MAX_PAGES_TO_VISIT = 50;
 		const urlFile = 'urls_list.txt';  
 		const excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG','pdf', 'zip', 'mp4', 'txt', 'ico'];
 		let pagesVisited = {};
@@ -114,8 +115,8 @@ exports.crawlingFunction=function(Urls,devices,res){
     }
 	var options={
 		method:'get',
-		url:url,
-		proxy:'http://proxy.gtm.lilly.com:9000'
+		url:url
+		
 	}
     request(options, function (error, response, body) {
       if (error) {
@@ -126,7 +127,7 @@ exports.crawlingFunction=function(Urls,devices,res){
       console.log("Status code: " + response.statusCode);
       if (response.statusCode !== 200) {
 		  pagesToVisit.pop(url);
-        callback();
+			callback();
 		
         return;
       }
@@ -143,27 +144,42 @@ exports.crawlingFunction=function(Urls,devices,res){
   
 
   function collectInternalLinks($) {
-    let relativeLinks = $("a[href^='/']");
-    console.log("Found " + relativeLinks.length + " relative links on page");
+    let relativeLinks = $("a[href]");
+	if(!relativeLinks){
+		let relativeLinks = $("a[href^='']");
+	}
+    console.log("Found " + relativeLinks + " relative links on page");
     relativeLinks.each(function () {
       let link = $(this).attr('href');
+	 
       let type = link.split('.');
       let linkUrl = new URL(link);
+	  
+	  console.log(type+'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
       type = type[type.length - 1];
+	  console.log(type+'=================shjhfdjskfdhksdhfshkhfksfjkfsjksjkjsdfks')
+	  if(link.startsWith('javascript:void(0)')){
+		  console.log('abra ka dabra============================================');
+	  }
       console.log(link);
       console.log(link.hostname);
       if (!(linkUrl.hostname)) {
         console.log('no hostname found');
         if ((excludeTypes.indexOf(type.toLowerCase()) < 0) &&
-          (excludeTypes.indexOf(type.toUpperCase()) < 0)) {
-          pagesToVisit.push(baseUrl + $(this).attr('href'));
-        }
+          (excludeTypes.indexOf(type.toUpperCase()) < 0)&&(!link.startsWith('#'))&&(!link.startsWith('javascript:void(0)'))) {
+			if(link.startsWith('/')){
+			pagesToVisit.push(baseUrl+$(this).attr('href'));
+		}
+		else{
+			pagesToVisit.push(baseUrl+'/'+$(this).attr('href'));
+		}
+		  }
       }
     });
     console.log('=======================================');
   }
 			
-		})
+		
 
 	
 	

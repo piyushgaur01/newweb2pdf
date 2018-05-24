@@ -1,6 +1,9 @@
 var pdfDir = './public/PDF/';
+var loc='public/PDF';
 var screenshot = require('../server-controllers/screenshot');
 var screenshotDir = './public/screenshots/';
+const opn = require('opn');
+//=> http://the/current/location
 exports.pdfgenerator=function(urlHostName,deviceName,res) {
     var PDF = require('pdfkit');
     var fs = require('fs');
@@ -44,8 +47,8 @@ exports.pdfgenerator=function(urlHostName,deviceName,res) {
   
         doc.end();
 		console.log('success');
-		res.download(`${pdfDir}/${urlHostName}.${deviceName}.pdf`)
-  
+		console.log(opn(`http://localhost:8080/../PDF/${urlHostName}.${deviceName}.pdf`));
+		res.send('done');
       });
   
     });
