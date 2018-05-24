@@ -1,1 +1,0 @@
-["https://lillypro.es","https://lillypro.es/index.aspx","https://lillypro.es/diabetes/authentication/login.aspx","https://lillypro.es/forget-password.aspx","https://lillypro.es/register.aspx","https://lillypro.es/diabetes/authentication/register.aspx","https://lillypro.es/terapeutiche.aspx"]
