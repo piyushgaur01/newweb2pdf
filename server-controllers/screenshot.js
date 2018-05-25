@@ -5,9 +5,18 @@ var async = require('async');
 const URL = require('url-parse');
 var pdfGenerator = require('../server-controllers/pdf-generator');
 var screenshotDir = './public/screenshots/';
-var pdfDir = './../PDF/';
+var pdfDir = './public/PDF/';
 
 exports.crawlingFunction=function(urlHostName,devices,res){
+
+
+if (!fs.existsSync(`${screenshotDir}`)) {
+                    fs.mkdirSync(`${screenshotDir}`);
+                }
+if (!fs.existsSync(`${pdfDir}`)) {
+					fs.mkdirSync(`${pdfDir}`);
+                }
+
 
 let desktop = {
   name: 'desktop',
@@ -98,7 +107,7 @@ function screenshot(device,urlHostName,res) {
         await browser.close();
       }
 	  catch(e){
-		  console.log(e);
+		  console.log(e+'at line 101');
 	  }
 	  
 	  }
@@ -106,17 +115,7 @@ function screenshot(device,urlHostName,res) {
   
     
   
-	})}
-	//res.send('PDF will be generation is in ')
-
-
-
-
-
-
-
-
-
-
-
-
+	})
+	
+	}
+	

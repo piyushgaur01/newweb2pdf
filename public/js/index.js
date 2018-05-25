@@ -1,5 +1,3 @@
-$('#openPdfDiv').hide();
-
 function GeneratePDF() {
 
     var allow = false;
@@ -11,11 +9,7 @@ function GeneratePDF() {
 
     var postData = { url: '', devices: []};
 	
-	
-		
-	
-
-    if ($('#ch1').is(":checked")) {
+	if ($('#ch1').is(":checked")) {
         postData.devices.push('mobile');
 		allow = true;
     }
@@ -34,13 +28,24 @@ function GeneratePDF() {
     }
 
     if (allow) {
+	$(document).ajaxStart(function(){
+        $("#myModal").css("display", "block");
+    });
+    $(document).ajaxComplete(function(){
+        $("#myModal").css("display", "none");
+    });		
         $('#myModal').modal({ backdrop: 'static', keyboard: false, show: true });
         var url = $('#urlText')[0].value.split(',');
 		console.log(url.length);
-		var j=0;
-		for(var i=0;i<url.length;i++){
+		
+			for(var i=0,j=0;i<url.length;i++){
+			if(url[i].startsWith('https://')){}
+			else{
+				url[i]='https://'+url[i];
+			}
 			console.log(url[i]);
         postData.url = url[i];
+	
         //var fileName = url[i].replace('https://', '');
         //if (fileName === url[i]) {
           //  fileName = url[i].replace('http://', '');
@@ -54,23 +59,26 @@ function GeneratePDF() {
             data: JSON.stringify(postData),
             contentType: "application/json",
             success: function (response) {
-				alert(response);
+				//alert(response);
 				j++;
                 console.log(response);
-               
+				
+				if(j==url.length){
+				 $('#myModal').modal('hide');
+				 //alert(j);
+			}
                 //$('#openPdfDiv').show();
                 //$('#openPdfLink').attr('href', '../PDF/' + fileName + '.pdf');
             },
             error: function (jqXHR, textStatus, errorThrown) {
               console.log(JSON.stringify(jqXHR));
                 console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                $('#myModal').modal('hide');
+                alert('Error in Creating PDF');
 				}
 			});
+			
+			
 		}
-			if(j==url.length){
-				 $('#myModal').modal('hide');
-			}
     } else {
         alert('Please select at least one device');
     }
@@ -78,7 +86,7 @@ function GeneratePDF() {
 
 
 $(document).ready(function () {
-    var bgImgHeight = $(window).height() - 50;
+   var bgImgHeight = $(window).height() - 100;
     $('.bgBack').css('min-height', bgImgHeight);
 
 
@@ -92,7 +100,7 @@ $(document).ready(function () {
         // Settings
         var $widget = $(this),
             $button = $widget.find('button'),
-            $checkbox = $widget.find('input:radio'),
+            $checkbox = $widget.find('input:checkbox'),
             color = $button.data('color'),
             settings = {
                 on: {
@@ -105,9 +113,15 @@ $(document).ready(function () {
 
         // Event Handlers
         $button.on('click', function () {
-            $checkbox.prop('checked', !$checkbox.is(':checked'));
-            $checkbox.triggerHandler('change');
-            updateDisplay();
+			$("input[type='checkbox']").each(function(){
+				$(this).prop('checked',false);
+				 $(this).triggerHandler('change');
+				updateDisplay();
+			})
+			$checkbox.prop('checked', true);
+			$checkbox.triggerHandler('change');
+			updateDisplay();
+           
         });
         $checkbox.on('change', function () {
             updateDisplay();
@@ -154,3 +168,4 @@ $(document).ready(function () {
     $("#generatePdf").click(GeneratePDF);
 
 });
+

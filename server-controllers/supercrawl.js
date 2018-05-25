@@ -1,4 +1,3 @@
-
 var request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
@@ -13,7 +12,7 @@ exports.crawlingFunction=function(Urls,devices,res){
 		START_URL=Urls.trim();
 		const MAX_PAGES_TO_VISIT = 50;
 		const urlFile = 'urls_list.txt';  
-		const excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG','pdf', 'zip', 'mp4', 'txt', 'ico'];
+		const excludeTypes = ['css', 'js', 'png', 'gif', 'jpg', 'JPG','pdf', 'zip', 'mp4', 'txt', 'ico','exe','ai'];
 		let pagesVisited = {};
 		let numPagesVisited = 0;
 		let pagesToVisit = [];
@@ -36,12 +35,11 @@ exports.crawlingFunction=function(Urls,devices,res){
   pagesToVisit.push(START_URL);
   crawl();
   console.log("this is the end of first part");
-  //
-
-  function crawl() {
+  
+	function crawl() {
     pagesToVisit = utilities.ArrNoDupe(pagesToVisit);
     if (numPagesVisited >= MAX_PAGES_TO_VISIT) {
-      console.log("Reached max limit of number of pages to visit.");
+      
       fs.writeFile(urlFilePath, JSON.stringify(pagesToVisit), function (err) {
         if (err) {
           console.log(err);
@@ -53,7 +51,7 @@ exports.crawlingFunction=function(Urls,devices,res){
       });
     }
     if (pagesToVisit.length >= 50) {
-      console.log("Pages to visit array size threshold hit.");
+      
       fs.writeFile(urlFilePath, JSON.stringify(pagesToVisit), function (err) {
         if (err) {
           console.log(err);
@@ -111,7 +109,7 @@ exports.crawlingFunction=function(Urls,devices,res){
         });
         stream.end();
       });
-      return res.send(JSON.stringify(pagesToVisit));
+      
     }
 	var options={
 		method:'get',
@@ -177,16 +175,4 @@ exports.crawlingFunction=function(Urls,devices,res){
     console.log('=======================================');
   }
 			
-		
-
-	
-	
 } 
-
-
- 
- 
- 
- 
-
-  	

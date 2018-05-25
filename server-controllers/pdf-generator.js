@@ -37,11 +37,7 @@ exports.pdfgenerator = function (urlHostName, deviceName, res) {
       console.log(body);
       console.log('added');
       for (var i = 0; i < body.length; i++) {
-        doc.image(body[i], 0, 15, { width: 500 });
-        // doc.text('HOLIDAYS - 1 Fortime',80,165,{align:'TOP'});
-        // doc.text('Hello this is a demo file',100,200);
-
-
+        doc.image(body[i], 0, 15, { width: 550,height:700 });
         doc.addPage();
       }
 
@@ -54,3 +50,4 @@ exports.pdfgenerator = function (urlHostName, deviceName, res) {
 
   });
 }
+
