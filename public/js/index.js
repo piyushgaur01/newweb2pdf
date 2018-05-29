@@ -86,7 +86,7 @@ function GeneratePDF() {
 
 
 $(document).ready(function () {
-   var bgImgHeight = $(window).height() - 100;
+   var bgImgHeight = $(window).height() - 155;
     $('.bgBack').css('min-height', bgImgHeight);
 
 

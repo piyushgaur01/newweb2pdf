@@ -13,7 +13,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  return res.render('index', { title: 'Web-to-Pdf' });
+  console.log('request');
+ res.render('index', { title: 'Web-to-Pdf' });
 });
 
 router.post('/generatepdf', function (req, res, next) {
@@ -24,16 +25,6 @@ router.post('/generatepdf', function (req, res, next) {
   var devices = body.devices;
   let promiseArray = [];
   supercrawl.crawlingFunction(url,devices,res);
-  
-  
-  
-  
- 
-
-  
-
-
-  
 
   // urlsList
   //   .then((success) => {
