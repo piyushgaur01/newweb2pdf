@@ -13,7 +13,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  return res.render('index', { title: 'Express' });
+  return res.render('index', { title: 'Web-to-Pdf' });
 });
 
 router.post('/generatepdf', function (req, res, next) {

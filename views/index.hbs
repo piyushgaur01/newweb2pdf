@@ -4,12 +4,13 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="row">
                 <div class="navbar-header col-sm-3">
-                    <img src="images/logo" alt="tcs-logo" class="tcs_logo img-responsive">
+                    <img src="images/tcs_50.png" alt="tcs-logo" class="tcs_logo img-responsive">
                 </div>
                 <div class="col-sm-3 col-sm-offset-6">
                     <p class="LogoText">WEB 2 PDF</p>
 
-                    {{!-- <a href='#' class="active-iframe help_click" style="color: white;
+                    {{!--
+                    <a href='#' class="active-iframe help_click" style="color: white;
                     font-weight: bold; font-size: 1.3em; text-decoration: underline;">
                         Help
                     </a> --}}
@@ -24,7 +25,8 @@
         <div class="container-fluid bgBack">
             <div class="blur"></div>
             <div class="row">
-                <!--iframe id="display_help" src="http://vm-acellywd-087:8080/Home.aspx#" class="iFrame_Help"></iframe>
+                {{!--
+                <iframe id="display_help" src="http://vm-acellywd-087:8080/Home.aspx#" class="iFrame_Help"></iframe> --}}
                 <div class="col-sm-6 col-sm-offset-3 formControl">
                     {{!-- <div class="titleHeader">
                         <h3>Web2PDF Generator</h3>
@@ -32,8 +34,7 @@
 
                     <div role="urlFetching">
                         <form id="urlForm">
-                            <input required id="urlText" style="width:100%" placeholder="Enter the url">
-                            {{!-- <label for="urlText">Enter the URL</label> --}}
+                            <input required id="urlText" style="width:100%" placeholder="Enter the url" autocomplete="off">
                             <button id="generatePdf" class="btn btn-primary" style="margin-top:2%;">Generate PDF</button>
                         </form>
                     </div>
@@ -41,7 +42,7 @@
                     <div id="resolution">
                         <span class="button-checkbox">
                             <button type="button" class="btn" data-color="danger">Mobile</button>
-                            <input type="checkbox" required id="ch1"  class="hidden"  />
+                            <input type="checkbox" required id="ch1" class="hidden" />
                         </span>
                         <span class="button-checkbox">
                             <button type="button" class="btn" data-color="primary">iPad</button>
@@ -49,44 +50,24 @@
                         </span>
                         <span class="button-checkbox">
                             <button type="button" class="btn" data-color="success">Desktop</button>
-                            <input type="checkbox" required id="ch3" class="hidden"  />
+                            <input type="checkbox" required id="ch3" class="hidden" checked="true"/>
                         </span>
                         <span class="button-checkbox">
                             <button type="button" class="btn" data-color="info">Large Desktop</button>
-                            <input type="checkbox" required id="ch4" class="hidden"  />
+                            <input type="checkbox" required id="ch4" class="hidden" />
                         </span>
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            {{!-- <div class="row" id="openPdfDiv">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <p class="bg-success">
-                                <span>PDF Generated Successfully</span>
-                                <span class="btn btn-primary">
-                                    <a id="openPdfLink" href="../PDF/lilly.pdf" target='_blank'>Open pdf</a>
-                                </span>
-                            </p>
-                            <!-- <button id="openPdf" class="btn btn-warning">Open PDF</button> -->
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
-
-        
     </div>
     <footer class="footer_section" id="contact">
-            <div class="container">
-                <div class="footer_bottom">
-                    <span>© All rights reserved by TATA CONSULTANCY SERVICES LTD</span>
-                </div>
+        <div class="container">
+            <div class="footer_bottom">
+                <span>© All rights reserved by TATA CONSULTANCY SERVICES LTD</span>
             </div>
-        </footer>
+        </div>
+    </footer>
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
