@@ -1,1 +1,0 @@
-["https://www.screencastify.com/","https://www.screencastify.com/user","https://www.screencastify.com/user/licenses","https://www.screencastify.com/user/api_console"]
